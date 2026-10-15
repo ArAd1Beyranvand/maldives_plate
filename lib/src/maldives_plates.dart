@@ -1,3 +1,5 @@
+import 'dart:math';
+
 import 'package:plate_core/plate_core.dart';
 
 import 'maldives_alphabets.dart';
@@ -83,15 +85,8 @@ abstract final class _Layout {
 abstract final class MaldivesPlates {
   static final Map<String, PlateSpec> _cache = <String, PlateSpec>{};
 
-  static PlateSpec of(MaldivesCategory category, {int serialDigits = 4}) {
-    if (serialDigits < 1 || serialDigits > 4) {
-      throw ArgumentError(
-        'A Maldivian serial is 1–4 digits (got $serialDigits).',
-      );
-    }
-    final id = 'mv.${category.id}.serial$serialDigits';
-    return _cache[id] ??= _spec(id, category, serialDigits);
-  }
+  static PlateSpec of(MaldivesCategory category) =>
+      _cache[category.id] ??= _spec('mv.${category.id}', category);
 
   static PlateSpec get private => of(MaldivesCategory.private);
   static PlateSpec get commercial => of(MaldivesCategory.commercial);
@@ -100,12 +95,12 @@ abstract final class MaldivesPlates {
   static PlateSpec get taxi => of(MaldivesCategory.taxi);
   static PlateSpec get diplomatic => of(MaldivesCategory.diplomatic);
 
-  /// Every category at the reference's four digits.
+  /// Every category.
   static List<PlateSpec> get all => <PlateSpec>[
     for (final c in MaldivesCategory.values) of(c),
   ];
 
-  static PlateSpec _spec(String id, MaldivesCategory category, int digits) {
+  static PlateSpec _spec(String id, MaldivesCategory category) {
     final slots = <PlateSlot>[];
     final groups = <PlateTextGroup>[];
 
@@ -116,24 +111,25 @@ abstract final class MaldivesPlates {
       double cx,
       double pitch,
       double cy,
-      double height,
-    ) {
-      final start = slots.length;
-      slots.addAll(
-        plateRegister(
+      double height, {
+      int? minLength,
+    }) {
+      if (key != null) {
+        groups.add(PlateTextGroup(<int>[slots.length], key: key));
+      }
+      slots.add(
+        PlateSlot(
           alphabet: alphabet,
-          count: count,
-          left: cx - count * pitch / 2,
-          top: cy - height / 2,
-          width: pitch,
-          height: height,
+          box: PlateBox(
+            cx - count * pitch / 2,
+            cy - height / 2,
+            count * pitch,
+            height,
+          ),
+          length: count,
+          minLength: minLength,
+          spacing: max(0, pitch - 0.6 * 0.72 * height),
         ),
-      );
-      if (key == null) return;
-      groups.add(
-        PlateTextGroup(<int>[
-          for (var i = start; i < slots.length; i++) i,
-        ], key: key),
       );
     }
 
@@ -154,11 +150,12 @@ abstract final class MaldivesPlates {
     run(
       'serial',
       MaldivesAlphabets.digits,
-      digits,
+      4,
       _Layout.serialCx,
       _Layout.serialPitch,
       _Layout.bottomCy,
       _Layout.bottomBox,
+      minLength: 1,
     );
 
     return PlateSpec(

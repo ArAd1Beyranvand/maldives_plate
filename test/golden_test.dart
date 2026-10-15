@@ -41,7 +41,10 @@ void main() {
   for (final c in MaldivesCategory.values) {
     testWidgets(c.id, (tester) async {
       final spec = MaldivesPlates.of(c);
-      final controller = PlateController.fromValues(spec, 'AB1A3665'.split(''));
+      final controller = PlateController.fromValues(
+        spec,
+        'A B 1 A 3665'.split(' '),
+      );
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
