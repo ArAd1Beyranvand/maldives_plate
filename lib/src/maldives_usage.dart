@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
-/// A plate category: the letter printed before the serial, which with the
-/// field colour is the only thing that tells the six apart.
+/// A plate category: the letter before the serial, which with the field
+/// colour tells the six apart.
 @immutable
 class MaldivesCategory {
   const MaldivesCategory._(this.id, this.name, this.letter);
@@ -9,10 +9,8 @@ class MaldivesCategory {
   /// Stable identifier, used in spec ids.
   final String id;
 
-  /// English name, as the article gives it.
   final String name;
 
-  /// The letter on the plate.
   final String letter;
 
   static const MaldivesCategory private = MaldivesCategory._(

@@ -6,30 +6,18 @@ import 'maldives_alphabets.dart';
 import 'maldives_country.dart';
 import 'maldives_usage.dart';
 
-/// Where the ink sits on the 2003 Maldivian plates.
-///
-/// The article gives no size, so the canvas is the artwork's own 461×273
-/// (aspect 1.69) and every number is a pixel measured off the three artwork
-/// JPEGs (`Maldives_privat_plate_graphic`, `…_taxi_…`, `…_diplomatic_…`),
-/// which share one geometry to the pixel. The photographed plate in the
-/// article is a long 2.95 format; it is not implemented.
-///
-/// Measured ink:
-///
-/// * Frame: a line 8 thick floating inside the edge, x 17..25 and 437..445,
-///   y 14..22 and 251..259; the field shows outside it.
-/// * Top row, y 48..93 (46 tall, cy 70.5): `A` x 118..166, the two-character
-///   category x 189..272 (cells 43 apart), `A` x 296..344.
-/// * Bottom row, y 150..220 (71 tall, cy 185): the type letter x 62..119,
-///   the four digits x 158..403 (pitch 64, centre 280.5).
+/// Pixel measurements off the three reference artwork images, which share one
+/// geometry. The canvas is the artwork's own 461×273 (aspect 1.69); the
+/// photographed 2.95 format is not implemented.
 ///
 /// Cap ink is ~0.53 of the box height (`glyphStyle` sets the font to 0.72 of
-/// it), so the boxes are 88 and 135 tall for ink of 46 and 71; the first golden
-/// inked 1.3–1.5 high and 0.5–0.7 short, hence the 1.3 and 1.5 offsets from
-/// the ink centres.
+/// it), so the boxes are 88 and 135 tall for ink of 46 and 71. The centres are
+/// offset 1.3 and 1.5 from the measured ink centres to correct where the
+/// glyphs land.
 ///
-/// The frame is painted in the background as the divider colour, which the
-/// themes make the ink colour; the theme's own border is zero.
+/// The frame is an 8-thick line floating inside the edge, painted in the
+/// background as the divider colour (which the themes make the ink colour);
+/// the theme's own border is zero.
 abstract final class _Layout {
   static const double width = 461, height = 273;
 
@@ -43,7 +31,7 @@ abstract final class _Layout {
   static const double serialCx = 280.5, serialPitch = 64;
   static const double letterCx = 90.5;
 
-  /// The ring: outside it, the field; the line itself, the divider colour.
+  /// The ring: outside it the field, the line itself the divider colour.
   static const PlateSection frame = PlateSection.columns(<PlatePart>[
     PlatePart(PlateSection.plain, end: 17),
     PlatePart(
@@ -72,16 +60,13 @@ abstract final class _Layout {
   ]);
 }
 
-/// The Maldives' licence plates: one design, six categories.
+/// One design, six categories.
 ///
 /// The top row is a letter, a two-character vehicle category code (`B1`) and a
-/// letter; the bottom row the category's type letter and up to four digits.
-/// Text groups: `first`, `category`, `last`, `serial`. The type letter is a
-/// label. Pair `private`, `commercial`, `government` and `police` with
-/// `MaldivesThemes.black`, `taxi` with `.yellow`, `diplomatic` with `.blue`.
-///
-/// The article lists no Israel-specific value. Not implemented: the pre-1984,
-/// 1984 and 1998 series.
+/// letter; the bottom row the category's type letter (a label) and up to four
+/// digits. Text groups: `first`, `category`, `last`, `serial`. Pair `private`,
+/// `commercial`, `government` and `police` with `MaldivesThemes.black`, `taxi`
+/// with `.yellow`, `diplomatic` with `.blue`.
 abstract final class MaldivesPlates {
   static final Map<String, PlateSpec> _cache = <String, PlateSpec>{};
 
@@ -95,7 +80,6 @@ abstract final class MaldivesPlates {
   static PlateSpec get taxi => of(MaldivesCategory.taxi);
   static PlateSpec get diplomatic => of(MaldivesCategory.diplomatic);
 
-  /// Every category.
   static List<PlateSpec> get all => <PlateSpec>[
     for (final c in MaldivesCategory.values) of(c),
   ];

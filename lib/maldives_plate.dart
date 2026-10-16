@@ -5,7 +5,6 @@
 /// and the blue diplomatic plate. Earlier series are not implemented.
 library;
 
-export 'package:plate_alphabet/plate_alphabet.dart' show MaldivesAlphabets;
 export 'src/maldives_alphabets.dart';
 export 'src/maldives_colors.dart';
 export 'src/maldives_country.dart';

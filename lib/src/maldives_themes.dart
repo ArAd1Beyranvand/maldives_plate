@@ -3,23 +3,19 @@ import 'package:plate_core/plate_core.dart';
 
 import 'maldives_colors.dart';
 
-/// One ink on one field. The frame is not the theme's: the artwork's white
-/// line floats 14–17 units inside the plate edge, so each spec paints it in
-/// the background and sets the theme's border to nothing.
+/// One ink on one field. The frame floats inside the plate edge, so each spec
+/// paints it in the background and the theme's border is zero.
 abstract final class MaldivesThemes {
-  /// Private, commercial, government and police plates.
   static final PlateTheme black = _ink(
     MaldivesColors.black,
     MaldivesColors.white,
   );
 
-  /// Taxi plates.
   static final PlateTheme yellow = _ink(
     MaldivesColors.yellow,
     MaldivesColors.black,
   );
 
-  /// Diplomatic plates.
   static final PlateTheme blue = _ink(
     MaldivesColors.blue,
     MaldivesColors.white,
