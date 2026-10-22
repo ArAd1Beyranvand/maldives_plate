@@ -8,8 +8,7 @@ class MaldivesPlateValidator extends GatedPlateValidator {
   @override
   String get gateGroup => 'serial';
 
-  static const String reasonCategory =
-      'Not a vehicle category code in the published table.';
+  static const String reasonCategory = 'Not a vehicle category code in the published table.';
   static const String reasonSerial = 'The serial is 1–4 digits.';
 
   /// Motorcycles, passenger and goods.

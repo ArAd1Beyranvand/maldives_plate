@@ -80,9 +80,7 @@ abstract final class MaldivesPlates {
   static PlateSpec get taxi => of(MaldivesCategory.taxi);
   static PlateSpec get diplomatic => of(MaldivesCategory.diplomatic);
 
-  static List<PlateSpec> get all => <PlateSpec>[
-    for (final c in MaldivesCategory.values) of(c),
-  ];
+  static List<PlateSpec> get all => <PlateSpec>[for (final c in MaldivesCategory.values) of(c)];
 
   static PlateSpec _spec(String id, MaldivesCategory category) {
     final slots = <PlateSlot>[];
@@ -104,12 +102,7 @@ abstract final class MaldivesPlates {
       slots.add(
         PlateSlot(
           alphabet: alphabet,
-          box: PlateBox(
-            cx - count * pitch / 2,
-            cy - height / 2,
-            count * pitch,
-            height,
-          ),
+          box: PlateBox(cx - count * pitch / 2, cy - height / 2, count * pitch, height),
           length: count,
           minLength: minLength,
           spacing: max(0, pitch - 0.6 * 0.72 * height),
@@ -127,9 +120,7 @@ abstract final class MaldivesPlates {
     final cx = _Layout.categoryCx;
     run(null, MaldivesAlphabets.letters, 1, cx - cp / 2, cp, top, box);
     run(null, MaldivesAlphabets.digits, 1, cx + cp / 2, cp, top, box);
-    groups.add(
-      PlateTextGroup(<int>[categoryStart, categoryStart + 1], key: 'category'),
-    );
+    groups.add(PlateTextGroup(<int>[categoryStart, categoryStart + 1], key: 'category'));
     run('last', MaldivesAlphabets.letters, 1, _Layout.lastCx, w, top, box);
     run(
       'serial',
