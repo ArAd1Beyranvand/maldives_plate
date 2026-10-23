@@ -1,7 +1,7 @@
 name: maldives_plate
 description: "The Maldives' licence plates for the plate_core library — the 2003 series: black private, commercial, government and police plates, the yellow taxi plate and the blue diplomatic plate, with their themes and an advisory validator."
 version: 0.1.0
-publish_to: none
+repository: https://github.com/ArAd1Beyranvand/maldives_plate
 resolution: workspace
 
 environment:
