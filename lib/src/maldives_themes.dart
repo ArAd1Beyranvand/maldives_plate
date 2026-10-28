@@ -11,6 +11,13 @@ abstract final class MaldivesThemes {
   static final PlateTheme yellow = _ink(MaldivesColors.yellow, MaldivesColors.black);
 
   static final PlateTheme blue = _ink(MaldivesColors.blue, MaldivesColors.white);
+
+  static PlateTheme byType(PlateTheme base, String Function(String) group) =>
+      switch (group('type')) {
+        'T' => yellow,
+        'D' => blue,
+        _ => base,
+      };
 }
 
 PlateTheme _ink(Color field, Color ink) => PlateTheme.monochrome(

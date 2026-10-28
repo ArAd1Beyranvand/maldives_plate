@@ -4,7 +4,7 @@ import 'package:plate_core/plate_core.dart';
 
 import 'maldives_alphabets.dart';
 import 'maldives_country.dart';
-import 'maldives_usage.dart';
+import 'maldives_themes.dart';
 
 /// Pixel measurements off the three reference artwork images, which share one
 /// geometry. The canvas is the artwork's own 461×273 (aspect 1.69); the
@@ -63,26 +63,17 @@ abstract final class _Layout {
 /// One design, six categories.
 ///
 /// The top row is a letter, a two-character vehicle category code (`B1`) and a
-/// letter; the bottom row the category's type letter (a label) and up to four
-/// digits. Text groups: `first`, `category`, `last`, `serial`. Pair `private`,
-/// `commercial`, `government` and `police` with `MaldivesThemes.black`, `taxi`
-/// with `.yellow`, `diplomatic` with `.blue`.
+/// letter; the bottom row the serial of up to four digits, after the category's
+/// type letter. Values are `[first, category letter, category digit, last,
+/// serial, type]`; the type (`P`, `C`, `G`, `S`, `T`, `D`) is a chosen slot and
+/// `MaldivesThemes.byType` picks the taxi and diplomatic liveries. Text groups:
+/// `first`, `category`, `last`, `serial`, `type`.
 abstract final class MaldivesPlates {
-  static final Map<String, PlateSpec> _cache = <String, PlateSpec>{};
+  static final PlateSpec standard = _spec();
 
-  static PlateSpec of(MaldivesCategory category) =>
-      _cache[category.id] ??= _spec('mv.${category.id}', category);
+  static List<PlateSpec> get all => <PlateSpec>[standard];
 
-  static PlateSpec get private => of(MaldivesCategory.private);
-  static PlateSpec get commercial => of(MaldivesCategory.commercial);
-  static PlateSpec get government => of(MaldivesCategory.government);
-  static PlateSpec get police => of(MaldivesCategory.police);
-  static PlateSpec get taxi => of(MaldivesCategory.taxi);
-  static PlateSpec get diplomatic => of(MaldivesCategory.diplomatic);
-
-  static List<PlateSpec> get all => <PlateSpec>[for (final c in MaldivesCategory.values) of(c)];
-
-  static PlateSpec _spec(String id, MaldivesCategory category) {
+  static PlateSpec _spec() {
     final slots = <PlateSlot>[];
     final groups = <PlateTextGroup>[];
 
@@ -132,9 +123,10 @@ abstract final class MaldivesPlates {
       _Layout.bottomBox,
       minLength: 1,
     );
+    run('type', MaldivesAlphabets.type, 1, _Layout.letterCx, w, _Layout.bottomCy, _Layout.bottomBox);
 
     return PlateSpec(
-      id: id,
+      id: 'mv.standard',
       country: MaldivesCountry.maldives,
       canvasWidth: _Layout.width,
       canvasHeight: _Layout.height,
@@ -143,18 +135,7 @@ abstract final class MaldivesPlates {
       background: _Layout.frame,
       borderWidthRatioOverride: 0,
       slots: slots,
-      labels: <PlateLabel>[
-        PlateLabel(
-          text: category.letter,
-          box: PlateBox(
-            _Layout.letterCx - w / 2,
-            _Layout.bottomCy - _Layout.bottomBox / 2,
-            w,
-            _Layout.bottomBox,
-          ),
-          glyphHeight: _Layout.bottomBox,
-        ),
-      ],
+      resolveTheme: MaldivesThemes.byType,
       textGroups: groups,
     );
   }

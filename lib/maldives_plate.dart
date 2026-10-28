@@ -10,5 +10,4 @@ export 'src/maldives_colors.dart';
 export 'src/maldives_country.dart';
 export 'src/maldives_plates.dart';
 export 'src/maldives_themes.dart';
-export 'src/maldives_usage.dart';
 export 'src/maldives_validators.dart';

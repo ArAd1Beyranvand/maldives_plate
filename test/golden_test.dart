@@ -20,26 +20,16 @@ void main() {
     await loader.load();
   });
 
-  final themes = <MaldivesCategory, PlateTheme>{
-    MaldivesCategory.private: MaldivesThemes.black,
-    MaldivesCategory.commercial: MaldivesThemes.black,
-    MaldivesCategory.government: MaldivesThemes.black,
-    MaldivesCategory.police: MaldivesThemes.black,
-    MaldivesCategory.taxi: MaldivesThemes.yellow,
-    MaldivesCategory.diplomatic: MaldivesThemes.blue,
+  const samples = <String, String>{
+    'private': 'A B 1 A 3665 P',
+    'taxi': 'A A 0 A 1234 T',
+    'diplomatic': 'A A 0 A 1234 D',
   };
 
-  test('every category has a spec and a theme', () {
-    expect(<PlateSpec>[
-      for (final c in MaldivesCategory.values) MaldivesPlates.of(c),
-    ], MaldivesPlates.all);
-    expect(themes.keys.toSet(), MaldivesCategory.values.toSet());
-  });
-
-  for (final c in MaldivesCategory.values) {
-    testWidgets(c.id, (tester) async {
-      final spec = MaldivesPlates.of(c);
-      final controller = PlateController.fromValues(spec, 'A B 1 A 3665'.split(' '));
+  for (final e in samples.entries) {
+    testWidgets(e.key, (tester) async {
+      final spec = MaldivesPlates.standard;
+      final controller = PlateController.fromValues(spec, e.value.split(' '));
       await tester.pumpWidget(
         MaterialApp(
           home: Scaffold(
@@ -50,7 +40,7 @@ void main() {
                 height: 922 * spec.canvasHeight / spec.canvasWidth,
                 child: PlateView(
                   controller: controller,
-                  theme: themes[c]!,
+                  theme: MaldivesThemes.black,
                   country: MaldivesCountry.maldives,
                 ),
               ),
@@ -59,7 +49,7 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/${c.id}.png'));
+      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/${e.key}.png'));
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });
