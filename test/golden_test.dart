@@ -12,7 +12,9 @@ void main() {
   setUpAll(() async {
     TestWidgetsFlutterBinding.ensureInitialized();
     final loader = FontLoader('Roboto');
-    for (final path in const <String>['/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf']) {
+    for (final path in const <String>[
+      '/usr/share/fonts/truetype/dejavu/DejaVuSans-Bold.ttf',
+    ]) {
       final file = File(path);
       if (!file.existsSync()) continue;
       loader.addFont(file.readAsBytes().then((b) => ByteData.view(b.buffer)));
@@ -49,7 +51,10 @@ void main() {
         ),
       );
       await tester.pumpAndSettle();
-      await expectLater(find.byType(PlateView), matchesGoldenFile('goldens/${e.key}.png'));
+      await expectLater(
+        find.byType(PlateView),
+        matchesGoldenFile('goldens/${e.key}.png'),
+      );
       await tester.pumpWidget(const SizedBox.shrink());
       controller.dispose();
     });

@@ -4,7 +4,9 @@ import 'package:plate_core/plate_core.dart';
 
 void main() {
   PlateValidation judge(PlateSpec spec, String value) =>
-      const MaldivesPlateValidator().validate(PlateEntry(spec: spec, values: value.split(' ')));
+      const MaldivesPlateValidator().validate(
+        PlateEntry(spec: spec, values: value.split(' ')),
+      );
 
   test('accepts the article examples', () {
     expect(judge(MaldivesPlates.standard, 'A B 1 A 3665 P').isValid, isTrue);
