@@ -11,6 +11,4 @@ abstract final class MaldivesColors {
   static const Color yellow = Color(0xFFFEF200);
 
   static const Color blue = Color(0xFF00A3E8);
-
-  static const Color inactive = Color(0xFFB0B0B0);
 }

@@ -6,7 +6,6 @@ import 'maldives_colors.dart';
 abstract final class MaldivesCountry {
   static const PlateCountry maldives = PlateCountry(
     code: 'mv',
-    captionLines: <String>[],
     panelColor: MaldivesColors.white,
     panelTextColor: MaldivesColors.black,
   );

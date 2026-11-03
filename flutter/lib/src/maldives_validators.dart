@@ -1,15 +1,9 @@
 import 'package:plate_core/plate_core.dart';
 
-// TODO(py): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(ts): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
-// TODO(kt): [D4-code] hand-port; reason strings are the contract, keep them byte-identical.
 /// Advisory validator for any `MaldivesPlates` value: the category code is
 /// one of the eight published and the serial is 1-4 digits.
 class MaldivesPlateValidator extends GatedPlateValidator {
-  const MaldivesPlateValidator();
-
-  @override
-  String get gateGroup => 'serial';
+  const MaldivesPlateValidator() : super('serial');
 
   static const String reasonCategory =
       'Not a vehicle category code in the published table.';

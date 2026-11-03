@@ -6,13 +6,24 @@ GO VEGAN 🌱
 
 From the mighty people of Iran to the hospitable people of the Maldives to view examples:
 
-https://platexample.ir/#/discover/maldives
+https://platexample.ir/#/discover/maldives:flutter
 
 # maldives_plate
 
-The Maldives' licence plates for the `plate_core` library. The 2003 series (461×273, the reference artwork's own size): black private, commercial, government and police plates, the yellow taxi plate and the blue diplomatic plate. Earlier series are not implemented.
+The Maldives' licence plates for plate_core: the 2003 series: black private, commercial, government and police plates, the yellow taxi plate, and more.
 
-## Install
+## Languages
+
+| Language | Folder | Example |
+| --- | --- | --- |
+| Flutter / Dart | [`flutter/`](https://github.com/ArAd1Beyranvand/maldives_plate/tree/main/flutter) | [platexample](https://platexample.ir/#/discover/maldives:flutter) |
+| Kotlin | [`kotlin/`](https://github.com/ArAd1Beyranvand/maldives_plate/tree/main/kotlin) | [platexample](https://platexample.ir/#/discover/maldives:kotlin) |
+| Python | [`python/`](https://github.com/ArAd1Beyranvand/maldives_plate/tree/main/python) | [platexample](https://platexample.ir/#/discover/maldives:python) |
+| TypeScript | [`typescript/`](https://github.com/ArAd1Beyranvand/maldives_plate/tree/main/typescript) | [platexample](https://platexample.ir/#/discover/maldives:typescript) |
+
+## Quick start
+
+### Install
 
 ```yaml
 dependencies:
@@ -20,7 +31,7 @@ dependencies:
   maldives_plate: ^0.1.0
 ```
 
-## Use
+### Use
 
 ```dart
 import 'package:plate_core/plate_core.dart';
@@ -35,12 +46,27 @@ PlateCanvas(
 );
 ```
 
-## Contains
+## Specs
 
-- `MaldivesCountry` — country panel: `maldives`.
-- `MaldivesPlates` — 1 plate spec: `standard`.
-- `MaldivesThemes` — 3 themes: `black`, `yellow`, `blue`.
-- `MaldivesPlateValidator` — advisory validator; flags the frame, never blocks a keystroke.
+Each spec is one plate layout.
+
+- `MaldivesPlates.standard`
+
+## Themes
+
+- `MaldivesThemes.black`
+- `MaldivesThemes.yellow`
+- `MaldivesThemes.blue`
+- `MaldivesThemes.byType`(…)
+
+## Change it
+
+`PlateCanvas` takes `spec:` (an entry of `MaldivesPlates`) and `theme:` (an entry of `MaldivesThemes`). Set `validator:` to `MaldivesPlateValidator()` and `autoValidate: true` to show validation hints.
+
+## Also included
+
+- `MaldivesCountry` — the country panel.
+- `MaldivesPlateValidator` — the plate validator.
 
 ## Plates
 
@@ -57,3 +83,6 @@ serial, type]`; the type (`P`, `C`, `G`, `S`, `T`, `D`) is a chosen slot and
 
 Painted by [`plate_core`](https://pub.dev/packages/plate_core); alphabets shared through [`plate_alphabet`](https://pub.dev/packages/plate_alphabet); optional character picker in [`plate_keypad`](https://pub.dev/packages/plate_keypad).
 
+## License
+
+See [LICENSE](https://github.com/ArAd1Beyranvand/maldives_plate/blob/main/LICENSE).

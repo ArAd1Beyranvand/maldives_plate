@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:plate_core/plate_core.dart';
 
 import 'maldives_alphabets.dart';
@@ -25,11 +23,9 @@ abstract final class _Layout {
   static const double bottomCy = 186.5, bottomBox = 135;
 
   static const double firstCx = 142, lastCx = 320;
-  static const double categoryCx = 230.5, categoryPitch = 43;
-  static const double singleWidth = 64;
+  static const double categoryCx = 230.5, categoryPitch = 43, singleWidth = 64;
 
-  static const double serialCx = 280.5, serialPitch = 64;
-  static const double letterCx = 90.5;
+  static const double serialCx = 280.5, serialPitch = 64, letterCx = 90.5;
 
   /// The ring: outside it the field, the line itself the divider colour.
   static const PlateSection frame = PlateSection.columns(<PlatePart>[
@@ -91,17 +87,14 @@ abstract final class MaldivesPlates {
         groups.add(PlateTextGroup(<int>[slots.length], key: key));
       }
       slots.add(
-        PlateSlot(
-          alphabet: alphabet,
-          box: PlateBox(
-            cx - count * pitch / 2,
-            cy - height / 2,
-            count * pitch,
-            height,
-          ),
-          length: count,
+        plateRun(
+          alphabet,
+          count,
+          centre: cx,
+          top: cy - height / 2,
+          pitch: pitch,
+          height: height,
           minLength: minLength,
-          spacing: max(0, pitch - 0.6 * 0.72 * height),
         ),
       );
     }
@@ -145,8 +138,6 @@ abstract final class MaldivesPlates {
       country: MaldivesCountry.maldives,
       canvasWidth: _Layout.width,
       canvasHeight: _Layout.height,
-      panel: const PlatePanel(box: PlateBox(0, 0, 0, 0)),
-      noPanel: true,
       background: _Layout.frame,
       borderWidthRatioOverride: 0,
       slots: slots,
